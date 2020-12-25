@@ -1,0 +1,31 @@
+{
+  "name": "prostore",
+  "version": "1.0.0",
+  "description": "eCommerce store made using the MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariusailisoaie/prostore-mern.git"
+  },
+  "keywords": [
+    "mern",
+    "node.js",
+    "express",
+    "mongodb",
+    "react",
+    "redux",
+    "fullstack"
+  ],
+  "author": "Marius Ailisoaie",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariusailisoaie/prostore-mern/issues"
+  },
+  "homepage": "https://github.com/mariusailisoaie/prostore-mern#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
