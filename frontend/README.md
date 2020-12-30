@@ -1,1 +1,0 @@
-eCommerce store made using the MERN stack
