@@ -4,9 +4,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers/rootReducer'
 
 const cartItemsFromLocalStorage = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+const currentUserFromLocalStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
 
 const initialState = {
   cart: { cartItems: cartItemsFromLocalStorage },
+  currentUser: { userInfo: currentUserFromLocalStorage },
 }
 
 const middlewares = [thunk]
