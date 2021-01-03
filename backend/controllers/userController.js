@@ -3,7 +3,7 @@ import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 
 // @desc    Authenticate user & get JWT Token
-// @route   POST /api/user/login
+// @route   POST /api/user/signin
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body

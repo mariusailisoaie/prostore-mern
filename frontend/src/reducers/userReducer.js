@@ -8,19 +8,19 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UserActionTypes.USER_LOGIN_START:
+    case UserActionTypes.USER_SIGNIN_START:
       return {
         ...state,
         isFetching: true,
       }
-    case UserActionTypes.USER_LOGIN_SUCCESS:
+    case UserActionTypes.USER_SIGNIN_SUCCESS:
       return {
         ...state,
         userInfo: action.payload,
         isFetching: false,
         errorMessage: '',
       }
-    case UserActionTypes.USER_LOGIN_FAILURE:
+    case UserActionTypes.USER_SIGNIN_FAILURE:
       return {
         ...state,
         isFetching: false,

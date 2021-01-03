@@ -4,7 +4,7 @@ import protect from '../middleware/authMiddleware.js'
 import { authUser, registerUser, getUserProfile } from '../controllers/userController.js'
 
 router.route('/register').post(registerUser)
-router.post('/login', authUser)
+router.post('/signin', authUser)
 router.route('/profile').get(protect, getUserProfile)
 
 export default router
