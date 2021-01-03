@@ -62,7 +62,7 @@ const SignInScreen = ({ location, history }) => {
 
       <Row className='py-3'>
         <Col>
-          New Customer? {' '} <Link to={redirect ? `/signup=redirect=${ redirect }` : '/signup'}></Link>
+          New Customer? {' '} <Link to={redirect ? `/signup?redirect=${ redirect }` : '/signup'}>Sign up</Link>
         </Col>
       </Row>
     </FormContainer>
