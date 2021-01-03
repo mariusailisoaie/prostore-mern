@@ -35,3 +35,8 @@ export const userLoginStartAsync = (email, password) => {
     }
   }
 }
+
+export const signout = () => dispatch => {
+  localStorage.removeItem('userInfo')
+  dispatch({ type: UserActionTypes.USER_LOGOUT })
+}
