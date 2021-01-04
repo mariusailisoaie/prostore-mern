@@ -73,6 +73,41 @@ export const userSignUpStartAsync = (name, email, password) => {
   }
 }
 
+export const getUserDetailsStart = () => ({
+  type: UserActionTypes.GET_USER_DETAILS_START,
+})
+
+export const getUserDetailsSuccess = userDetails => ({
+  type: UserActionTypes.GET_USER_DETAILS_SUCCESS,
+  payload: userDetails,
+})
+
+export const getUserDetailsFailure = errorMessage => ({
+  type: UserActionTypes.GET_USER_DETAILS_FAILURE,
+  payload: errorMessage,
+})
+
+export const getUserDetailsStartAsync = id => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(getUserDetailsStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.get(`/api/user/${ id }`, config)
+
+      dispatch(getUserDetailsSuccess(data))
+    } catch (error) {
+      dispatch(getUserDetailsFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
   dispatch({ type: UserActionTypes.USER_LOGOUT })

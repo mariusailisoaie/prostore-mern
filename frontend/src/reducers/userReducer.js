@@ -51,4 +51,33 @@ const userReducer = (state = INITIAL_STATE, action) => {
   }
 }
 
-export default userReducer
+const userDetailsReducer = (state = {
+  userDetails: {},
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case UserActionTypes.GET_USER_DETAILS_START:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case UserActionTypes.GET_USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userDetails: action.payload,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case UserActionTypes.GET_USER_DETAILS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export { userReducer, userDetailsReducer }
