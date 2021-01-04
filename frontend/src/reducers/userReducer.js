@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   errorMessage: '',
 }
 
+// Reducer for user sign in, sign up and log out
+// TODO: refactor/improve/maybe split this reducer this reducer
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UserActionTypes.USER_SIGNIN_START:

@@ -1,6 +1,7 @@
 import { UserActionTypes } from './actionTypes/userActionTypes'
 import axios from 'axios'
 
+// Actions for sign in
 export const userSignInStart = () => ({
   type: UserActionTypes.USER_SIGNIN_START,
 })
@@ -36,6 +37,7 @@ export const userSignInStartAsync = (email, password) => {
   }
 }
 
+// Actions for sign up
 export const userSignUpStart = () => ({
   type: UserActionTypes.USER_SIGNUP_START,
 })
@@ -73,6 +75,7 @@ export const userSignUpStartAsync = (name, email, password) => {
   }
 }
 
+// Actions for getting user details for profile screen
 export const getUserDetailsStart = () => ({
   type: UserActionTypes.GET_USER_DETAILS_START,
 })
@@ -108,6 +111,7 @@ export const getUserDetailsStartAsync = id => {
   }
 }
 
+// Actions for updating user profile
 export const updateUserProfileStart = () => ({
   type: UserActionTypes.UPDATE_USER_PROFILE_START,
 })
@@ -143,6 +147,7 @@ export const updateUserProfileStartAsync = userDetails => {
   }
 }
 
+// Action for sign out
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
   dispatch({ type: UserActionTypes.USER_LOGOUT })
