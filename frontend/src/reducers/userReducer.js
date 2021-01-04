@@ -80,4 +80,34 @@ const userDetailsReducer = (state = {
   }
 }
 
-export { userReducer, userDetailsReducer }
+const updateUserProfileReducer = (state = {
+  userDetails: {},
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case UserActionTypes.UPDATE_USER_PROFILE_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case UserActionTypes.UPDATE_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        userDetails: action.payload,
+        success: true,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case UserActionTypes.UPDATE_USER_PROFILE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export { userReducer, userDetailsReducer, updateUserProfileReducer }

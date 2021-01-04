@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getUserDetailsStartAsync } from '../actions/userActions'
+import { getUserDetailsStartAsync, updateUserProfileStartAsync } from '../actions/userActions'
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -16,6 +16,9 @@ const ProfileScreen = ({ history }) => {
 
   const userProfileDetails = useSelector(state => state.userProfileDetails)
   const { userDetails, isFetching, errorMessage } = userProfileDetails
+
+  const updatedUserProfileDetails = useSelector(state => state.updatedUserProfileDetails)
+  const { success } = updatedUserProfileDetails
 
   const currentUser = useSelector(state => state.currentUser)
   const { userInfo } = currentUser
@@ -39,7 +42,12 @@ const ProfileScreen = ({ history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match!')
     } else {
-      // dispatch update user profile action
+      dispatch(updateUserProfileStartAsync({
+        id: userDetails._id,
+        name,
+        email,
+        password,
+      }))
     }
   }
 
@@ -50,6 +58,7 @@ const ProfileScreen = ({ history }) => {
 
         {message && <Message variant='danger'>{message}</Message>}
         {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
+        {success && <Message variant='success'>Profile successfully updated!</Message>}
         {isFetching && <Loader />}
 
         <Form onSubmit={submitHandler}>

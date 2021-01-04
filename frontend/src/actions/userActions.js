@@ -108,6 +108,41 @@ export const getUserDetailsStartAsync = id => {
   }
 }
 
+export const updateUserProfileStart = () => ({
+  type: UserActionTypes.UPDATE_USER_PROFILE_START,
+})
+
+export const updateUserProfileSuccess = updatedUserDetails => ({
+  type: UserActionTypes.UPDATE_USER_PROFILE_SUCCESS,
+  payload: updatedUserDetails,
+})
+
+export const updateUserProfileFailure = errorMessage => ({
+  type: UserActionTypes.UPDATE_USER_PROFILE_FAILURE,
+  payload: errorMessage,
+})
+
+export const updateUserProfileStartAsync = userDetails => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(updateUserProfileStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.put('/api/user/profile', userDetails, config)
+
+      dispatch(updateUserProfileSuccess(data))
+    } catch (error) {
+      dispatch(updateUserProfileFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
   dispatch({ type: UserActionTypes.USER_LOGOUT })
