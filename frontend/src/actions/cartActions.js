@@ -28,3 +28,12 @@ export const removeItemFromCart = id => (dispatch, getState) => {
 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
+
+export const saveShippingAddress = shippingAddress => (dispatch) => {
+  dispatch({
+    type: CartActionTypes.SAVE_SHIPPING_ADDRESS,
+    payload: shippingAddress,
+  })
+
+  localStorage.setItem('shippingAddress', JSON.stringify(shippingAddress))
+}

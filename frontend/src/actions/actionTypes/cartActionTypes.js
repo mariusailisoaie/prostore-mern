@@ -1,4 +1,5 @@
 export const CartActionTypes = {
   ADD_ITEM: 'ADD_ITEM',
   REMOVE_ITEM: 'REMOVE_ITEM',
+  SAVE_SHIPPING_ADDRESS: 'SAVE_SHIPPING_ADDRESS',
 }
