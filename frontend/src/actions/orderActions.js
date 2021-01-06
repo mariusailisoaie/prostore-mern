@@ -36,3 +36,39 @@ export const createOrderStartAsync = order => {
     }
   }
 }
+
+// Actions for getting order by id
+export const getOrderDetailsStart = () => ({
+  type: OrderActionTypes.GET_ORDER_DETAILS_START
+})
+
+export const getOrderDetailsSuccess = order => ({
+  type: OrderActionTypes.GET_ORDER_DETAILS_SUCCESS,
+  payload: order,
+})
+
+export const getOrderDetailsFailure = errorMessage => ({
+  type: OrderActionTypes.GET_ORDER_DETAILS_FAILURE,
+  payload: errorMessage,
+})
+
+export const getOrderDetailsStartAsync = orderId => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(getOrderDetailsStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.get(`/api/orders/${ orderId }`, config)
+
+      dispatch(getOrderDetailsSuccess(data))
+    } catch (error) {
+      dispatch(getOrderDetailsFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
