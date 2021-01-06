@@ -17,7 +17,7 @@ const PlaceOrderScreen = ({ history }) => {
   cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)
   cart.shippingPrice = cart.itemsPrice > 1000 ? 0 : 49
   cart.taxPrice = 0.25 * cart.itemsPrice
-  cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice
+  cart.totalPrice = cart.itemsPrice + cart.shippingPrice
 
   const createdOrder = useSelector(state => state.createdOrder)
   const { order, success, errorMessage } = createdOrder
