@@ -15,8 +15,9 @@ const OrderScreen = ({ match }) => {
   const { order, isFetching, errorMessage } = orderDetails
 
   useEffect(() => {
-    dispatch(getOrderDetailsStartAsync(orderId))
-  }, [dispatch, orderId])
+    if (!order || order._id !== orderId)
+      dispatch(getOrderDetailsStartAsync(orderId))
+  }, [dispatch, order, orderId])
 
   return isFetching ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : <Row>
     <Col md={8}>
