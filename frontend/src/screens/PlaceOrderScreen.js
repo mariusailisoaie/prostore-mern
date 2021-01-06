@@ -41,107 +41,104 @@ const PlaceOrderScreen = ({ history }) => {
   }
 
   return (
-    <div>
-      <CheckoutSteps step1 step2 step3 step4 />
+    errorMessage ? <Message variant='danger'>{errorMessage}</Message> :
+      <div>
+        <CheckoutSteps step1 step2 step3 step4 />
 
-      <Row>
-        <Col md={8}>
-          <ListGroup variant='flush'>
-            <ListGroup.Item>
-              <h2>Shipping</h2>
-              <p>
-                <strong>Address:</strong>
-                {' '} {address}, {postalCode}, {city}, {country}
-              </p>
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <h2>Payment Method</h2>
-              <p>{cart.paymentMethod}</p>
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <h2>Order Items</h2>
-
-              {cart.cartItems.length === 0 ? <Message>Your cart is empty</Message> : (
-                <ListGroup variant='flush'>
-                  {cart.cartItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image src={item.image} alt={item.name} fluid rounded />
-                        </Col>
-
-                        <Col>
-                          <Link to={`/product/${ item.productId }`}>{item.name}</Link>
-                        </Col>
-
-                        <Col md={4}>
-                          {item.quantity} x {item.price} dkk = {item.quantity * item.price} dkk
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-
-        <Col md={4}>
-          <Card>
+        <Row>
+          <Col md={8}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2>Order Summary</h2>
+                <h2>Shipping</h2>
+                <p>
+                  <strong>Address:</strong>
+                  {' '} {address}, {postalCode}, {city}, {country}
+                </p>
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>{cart.itemsPrice} dkk</Col>
-                </Row>
+                <h2>Payment Method</h2>
+                <p>{cart.paymentMethod}</p>
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>{cart.shippingPrice} dkk</Col>
-                </Row>
-              </ListGroup.Item>
+                <h2>Order Items</h2>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>VAT 25%</Col>
-                  <Col>{cart.taxPrice} dkk</Col>
-                </Row>
-              </ListGroup.Item>
+                {cart.cartItems.length === 0 ? <Message>Your cart is empty</Message> : (
+                  <ListGroup variant='flush'>
+                    {cart.cartItems.map((item, index) => (
+                      <ListGroup.Item key={index}>
+                        <Row>
+                          <Col md={1}>
+                            <Image src={item.image} alt={item.name} fluid rounded />
+                          </Col>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Total Price</Col>
-                  <Col>{cart.totalPrice} dkk</Col>
-                </Row>
-              </ListGroup.Item>
+                          <Col>
+                            <Link to={`/product/${ item.productId }`}>{item.name}</Link>
+                          </Col>
 
-              <ListGroup.Item>
-                {errorMessage && <Message variant='danger'>{errorMessage}</Message>}
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <Button
-                  type='button'
-                  className='btn-block'
-                  disabled={cart.cartItems === 0}
-                  onClick={placeOrderHandler}
-                >
-                  Place Order
-                </Button>
+                          <Col md={4}>
+                            {item.quantity} x {item.price} dkk = {item.quantity * item.price} dkk
+                        </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                )}
               </ListGroup.Item>
             </ListGroup>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+          </Col>
+
+          <Col md={4}>
+            <Card>
+              <ListGroup variant='flush'>
+                <ListGroup.Item>
+                  <h2>Order Summary</h2>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Items</Col>
+                    <Col>{cart.itemsPrice} dkk</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Shipping</Col>
+                    <Col>{cart.shippingPrice} dkk</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>VAT 25%</Col>
+                    <Col>{cart.taxPrice} dkk</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Total Price</Col>
+                    <Col>{cart.totalPrice} dkk</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn-block'
+                    disabled={cart.cartItems === 0}
+                    onClick={placeOrderHandler}
+                  >
+                    Place Order
+                </Button>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      </div>
   )
 }
 
