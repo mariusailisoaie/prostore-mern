@@ -72,3 +72,39 @@ export const getOrderDetailsStartAsync = orderId => {
     }
   }
 }
+
+// Actions for updating orders to paid
+export const payOrderStart = () => ({
+  type: OrderActionTypes.PAY_ORDER_START,
+})
+
+export const payOrderSuccess = paymentResult => ({
+  type: OrderActionTypes.PAY_ORDER_SUCCESS,
+  payload: paymentResult,
+})
+
+export const payOrderFailure = errorMessage => ({
+  type: OrderActionTypes.PAY_ORDER_FAILURE,
+  payload: errorMessage,
+})
+
+export const payOrderStartAsync = (orderId, paymentResult) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(payOrderStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.put(`/api/orders/${ orderId }/pay`, paymentResult, config)
+
+      dispatch(payOrderSuccess(data))
+    } catch (error) {
+      dispatch(payOrderFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
