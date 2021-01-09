@@ -108,3 +108,43 @@ export const payOrderStartAsync = (orderId, paymentResult) => {
     }
   }
 }
+
+// Actions for getting user orders
+export const getUserOrdersStart = () => ({
+  type: OrderActionTypes.GET_USER_ORDERS_START,
+})
+
+export const getUserOrdersSuccess = userOrders => ({
+  type: OrderActionTypes.GET_USER_ORDERS_SUCCESS,
+  payload: userOrders,
+})
+
+export const getUserOrdersFailure = errorMessage => ({
+  type: OrderActionTypes.GET_USER_ORDERS_FAILURE,
+  payload: errorMessage,
+})
+
+export const getUserOrdersStartAsync = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(getUserOrdersStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.get('/api/orders/userorders', config)
+
+      dispatch(getUserOrdersSuccess(data))
+    } catch (error) {
+      dispatch(getUserOrdersFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
+
+
+
