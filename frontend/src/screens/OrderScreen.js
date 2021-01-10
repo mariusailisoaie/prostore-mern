@@ -9,7 +9,7 @@ import { getOrderDetailsStartAsync, payOrderStartAsync } from '../actions/orderA
 import { OrderActionTypes } from '../actions/actionTypes/orderActionTypes'
 import axios from 'axios'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ history, match }) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -22,7 +22,14 @@ const OrderScreen = ({ match }) => {
   const orderPayStatus = useSelector(state => state.orderPayStatus)
   const { isFetching: paymentLoading, success: paymentSuccessful } = orderPayStatus
 
+  const currentUser = useSelector(state => state.currentUser)
+  const { userInfo } = currentUser
+
   useEffect(() => {
+    if (!userInfo) {
+      history.push('/signin')
+    }
+
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
       const script = document.createElement('script')
@@ -47,7 +54,7 @@ const OrderScreen = ({ match }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, order, orderId, paymentSuccessful])
+  }, [dispatch, history, userInfo, order, orderId, paymentSuccessful])
 
   const successPaymentHandler = paymentResult => {
     console.log(paymentResult)
