@@ -91,7 +91,6 @@ const getUserOrdersReducer = (state = {
 }
 
 const payOrderReducer = (state = {
-  success: false,
   isFetching: false,
   errorMessage: '',
 }, action) => {
