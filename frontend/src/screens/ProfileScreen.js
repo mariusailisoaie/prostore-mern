@@ -38,6 +38,7 @@ const ProfileScreen = ({ history }) => {
       } else {
         setName(userDetails.name)
         setEmail(userDetails.email)
+        dispatch(getUserOrdersStartAsync())
       }
     }
   }, [dispatch, history, userInfo, userDetails])
