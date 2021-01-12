@@ -120,6 +120,7 @@ const ProfileScreen = ({ history }) => {
             <Table striped bordered hover responsive className='table-sm'>
               <thead>
                 <tr>
+                  <th>NO.</th>
                   <th>ID</th>
                   <th>DATE</th>
                   <th>TOTAL</th>
@@ -130,8 +131,9 @@ const ProfileScreen = ({ history }) => {
               </thead>
               <tbody>
                 {
-                  orders.map(order => (
+                  orders.map((order, index) => (
                     <tr key={order._id}>
+                      <td>{index + 1}</td>
                       <td>{order._id}</td>
                       <td>{order.createdAt.split('T')[0]}</td>
                       <td>{order.totalPrice} dkk</td>
