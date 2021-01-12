@@ -27,6 +27,8 @@ const createOrderReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         errorMessage: action.payload,
       }
+    case OrderActionTypes.RESET_CREATED_ORDER:
+      return {}
     default:
       return state
   }

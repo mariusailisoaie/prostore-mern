@@ -30,6 +30,8 @@ const OrderScreen = ({ history, match }) => {
       history.push('/signin')
     }
 
+    dispatch({ type: OrderActionTypes.RESET_CREATED_ORDER })
+
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal')
       const script = document.createElement('script')
