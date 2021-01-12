@@ -5,6 +5,7 @@ import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
 import { createOrderStartAsync } from '../actions/orderActions'
+import { emptyCart } from '../actions/cartActions'
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -38,6 +39,8 @@ const PlaceOrderScreen = ({ history }) => {
       taxPrice: cart.taxPrice,
       totalPrice: cart.totalPrice,
     }))
+
+    dispatch(emptyCart())
   }
 
   return (

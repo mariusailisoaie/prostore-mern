@@ -46,3 +46,11 @@ export const savePaymentMethod = paymentMethod => (dispatch) => {
 
   localStorage.setItem('paymentMethod', JSON.stringify(paymentMethod))
 }
+
+export const emptyCart = () => dispatch => {
+  dispatch({
+    type: CartActionTypes.EMPTY_CART,
+  })
+
+  localStorage.removeItem('cartItems')
+}
