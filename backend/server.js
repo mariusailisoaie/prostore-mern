@@ -1,6 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
+import morgan from 'morgan'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
@@ -14,6 +15,7 @@ connectDB()
 
 const app = express()
 app.use(express.json())
+app.use(morgan('dev'))
 
 app.get('/', (req, res) => {
   res.send('Api is running.')
