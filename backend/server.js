@@ -2,6 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
+import path from 'path'
+const __dirname = path.resolve(path.dirname(decodeURI(new URL(import.meta.url).pathname)))
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 
@@ -17,9 +19,14 @@ const app = express()
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.get('/', (req, res) => {
-  res.send('Api is running.')
-})
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'))
+  })
+}
 
 app.use('/api/products', productRoutes)
 app.use('/api/user', userRoutes)
