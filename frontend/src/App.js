@@ -13,7 +13,7 @@ import ShippingScreen from './screens/ShippingScreen'
 import PaymentMethodScreen from './screens/PaymentMethodScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
-import PageNotFoundScreen from './screens/PageNotFoundScreen'
+// import PageNotFoundScreen from './screens/PageNotFoundScreen'
 
 const App = () => {
   return (
@@ -24,7 +24,6 @@ const App = () => {
         <main className='py-3'>
           <Container>
             <Switch>
-              <Route path='/' component={HomeScreen} exact />
               <Route path='/signin' component={SignInScreen} />
               <Route path='/signup' component={SignUpScreen} />
               <Route path='/profile' component={ProfileScreen} />
@@ -34,7 +33,8 @@ const App = () => {
               <Route path='/payment' component={PaymentMethodScreen} />
               <Route path='/placeorder' component={PlaceOrderScreen} />
               <Route path='/order/:id' component={OrderScreen} />
-              <Route component={PageNotFoundScreen} />
+              <Route path='/' component={HomeScreen} exact />
+              {/* <Route component={PageNotFoundScreen} /> */}
             </Switch>
           </Container>
         </main>
