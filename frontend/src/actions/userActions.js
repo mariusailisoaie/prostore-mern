@@ -147,6 +147,41 @@ export const updateUserProfileStartAsync = userDetails => {
   }
 }
 
+// Actions for getting users. Only for admins
+export const getUsersStart = () => ({
+  type: UserActionTypes.GET_USERS_START,
+})
+
+export const getUsersSuccess = users => ({
+  type: UserActionTypes.GET_USERS_SUCCESS,
+  payload: users,
+})
+
+export const getUsersFailure = errorMessage => ({
+  type: UserActionTypes.GET_USERS_FAILURE,
+  payload: errorMessage,
+})
+
+export const getUsers = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(getUsersStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.get('/api/users', config)
+
+      dispatch(getUsersSuccess(data))
+    } catch (error) {
+      dispatch(getUsersFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 // Action for sign out
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')

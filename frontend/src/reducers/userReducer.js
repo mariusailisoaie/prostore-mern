@@ -117,4 +117,33 @@ const updateUserProfileReducer = (state = {
   }
 }
 
-export { userReducer, userDetailsReducer, updateUserProfileReducer }
+const usersReducer = (state = {
+  users: [],
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case UserActionTypes.GET_USERS_START:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case UserActionTypes.GET_USERS_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case UserActionTypes.GET_USERS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export { userReducer, userDetailsReducer, updateUserProfileReducer, usersReducer }

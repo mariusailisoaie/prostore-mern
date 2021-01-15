@@ -14,6 +14,7 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
 import PageNotFoundScreen from './screens/PageNotFoundScreen'
+import UsersScreen from './screens/UsersScreen'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Container>
             <Switch>
               <Route path='/' component={HomeScreen} exact />
+              <Route path='/admin/users' component={UsersScreen} />
               <Route path='/signin' component={SignInScreen} />
               <Route path='/signup' component={SignUpScreen} />
               <Route path='/profile' component={ProfileScreen} />
