@@ -77,6 +77,11 @@ const userDetailsReducer = (state = {
         isFetching: false,
         errorMessage: action.payload,
       }
+    case UserActionTypes.RESET_USER_DETAILS:
+      return {
+        ...state,
+        userDetails: {},
+      }
     default:
       return state
   }

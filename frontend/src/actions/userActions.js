@@ -151,4 +151,5 @@ export const updateUserProfileStartAsync = userDetails => {
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
   dispatch({ type: UserActionTypes.USER_LOGOUT })
+  dispatch({ type: UserActionTypes.RESET_USER_DETAILS })
 }
