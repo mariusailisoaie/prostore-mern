@@ -175,4 +175,36 @@ const deleteUserReducer = (state = {
   }
 }
 
-export { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer, deleteUserReducer }
+const updateUserReducer = (state = {
+  success: false,
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case UserActionTypes.UPDATE_USER_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case UserActionTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        updatedUser: action.payload,
+        success: true,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case UserActionTypes.UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    case UserActionTypes.UPDATE_USER_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer, deleteUserReducer, updateUserReducer }

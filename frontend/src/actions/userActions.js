@@ -217,6 +217,42 @@ export const deleteUser = userId => {
   }
 }
 
+// Actions for updating users. Only for admins
+export const updateUserStart = () => ({
+  type: UserActionTypes.UPDATE_USER_START,
+})
+
+export const updateUserSuccess = () => ({
+  type: UserActionTypes.UPDATE_USER_SUCCESS,
+})
+
+export const updateUserFailure = errorMessage => ({
+  type: UserActionTypes.UPDATE_USER_FAILURE,
+  payload: errorMessage,
+})
+
+export const updateUser = user => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(updateUserStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.put(`/api/user/${ user._id }`, user, config)
+
+      dispatch(updateUserSuccess())
+      dispatch({ type: UserActionTypes.GET_USER_DETAILS_SUCCESS, payload: data, })
+    } catch (error) {
+      dispatch(updateUserFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 // Action for sign out
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')

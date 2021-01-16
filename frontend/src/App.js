@@ -15,6 +15,7 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
 import PageNotFoundScreen from './screens/PageNotFoundScreen'
 import UsersScreen from './screens/UsersScreen'
+import EditUserScreen from './screens/EditUserScreen'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Switch>
               <Route path='/' component={HomeScreen} exact />
               <Route path='/admin/users' component={UsersScreen} />
+              <Route path='/admin/user/:id' component={EditUserScreen} />
               <Route path='/signin' component={SignInScreen} />
               <Route path='/signup' component={SignUpScreen} />
               <Route path='/profile' component={ProfileScreen} />
