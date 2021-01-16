@@ -124,4 +124,18 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser, signUpUser, getUserProfile, updateUserProfile, getUsers, deleteUser }
+// @desc    Get user by id. Admins only
+// @route   GET /api/user/:id
+// @access  Protected/Admins
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password')
+
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+export { authUser, signUpUser, getUserProfile, updateUserProfile, getUsers, deleteUser, getUserById }
