@@ -117,7 +117,7 @@ const updateUserProfileReducer = (state = {
   }
 }
 
-const usersReducer = (state = {
+const getUsersReducer = (state = {
   users: [],
   isFetching: false,
   errorMessage: '',
@@ -146,4 +146,4 @@ const usersReducer = (state = {
   }
 }
 
-export { userReducer, userDetailsReducer, updateUserProfileReducer, usersReducer }
+export { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer }
