@@ -100,7 +100,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Get all users. For admins only
+// @desc    Get all users. Admins only
 // @route   GET /api/users
 // @access  Protected/Admins
 const getUsers = asyncHandler(async (req, res) => {
@@ -109,5 +109,19 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
-export { authUser, signUpUser, getUserProfile, updateUserProfile, getUsers }
+// @desc    Delete user. Admins only
+// @route   GET /api/user/:id
+// @access  Protected/Admins
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
 
+  if (user) {
+    await user.remove()
+    res.json({ message: 'User removed successfully' })
+  } else {
+    res.status(401)
+    throw new Error('User not found')
+  }
+})
+
+export { authUser, signUpUser, getUserProfile, updateUserProfile, getUsers, deleteUser }
