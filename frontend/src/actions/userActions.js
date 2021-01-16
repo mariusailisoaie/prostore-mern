@@ -182,6 +182,41 @@ export const getUsers = () => {
   }
 }
 
+// Actions for deleting users. Only for admins
+export const deleteUserStart = () => ({
+  type: UserActionTypes.DELETE_USER_START,
+})
+
+export const deleteUserSuccess = success => ({
+  type: UserActionTypes.DELETE_USER_SUCCESS,
+  payload: success,
+})
+
+export const deleteUserFailure = errorMessage => ({
+  type: UserActionTypes.DELETE_USER_FAILURE,
+  payload: errorMessage,
+})
+
+export const deleteUser = userId => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(deleteUserStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.delete(`/api/users/${ userId }`, config)
+
+      dispatch(deleteUserSuccess(data))
+    } catch (error) {
+      dispatch(deleteUserFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 // Action for sign out
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
