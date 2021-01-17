@@ -5,7 +5,7 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { fetchProductDetailsStartAsync } from '../actions/productDetailsActions'
+import { fetchProductDetails } from '../actions/productDetailsActions'
 
 const ProductScreen = ({ history, match }) => {
   const [quantity, setQuantity] = useState(1)
@@ -16,7 +16,7 @@ const ProductScreen = ({ history, match }) => {
   const { product, isFetching, errorMessage } = productDetails
 
   useEffect(() => {
-    dispatch(fetchProductDetailsStartAsync(match.params.id))
+    dispatch(fetchProductDetails(match.params.id))
   }, [dispatch, match])
 
   const addToCartHandler = () => {

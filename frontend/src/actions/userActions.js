@@ -16,7 +16,7 @@ export const userSignInFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const userSignInStartAsync = (email, password) => {
+export const userSignIn = (email, password) => {
   return async dispatch => {
     try {
       dispatch(userSignInStart())
@@ -52,7 +52,7 @@ export const userSignUpFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const userSignUpStartAsync = (name, email, password) => {
+export const userSignUp = (name, email, password) => {
   return async dispatch => {
     try {
       dispatch(userSignUpStart())
@@ -90,7 +90,7 @@ export const getUserDetailsFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const getUserDetailsStartAsync = id => {
+export const getUserDetails = id => {
   return async (dispatch, getState) => {
     try {
       dispatch(getUserDetailsStart())
@@ -126,7 +126,7 @@ export const updateUserProfileFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const updateUserProfileStartAsync = userDetails => {
+export const updateUserProfile = userDetails => {
   return async (dispatch, getState) => {
     try {
       dispatch(updateUserProfileStart())

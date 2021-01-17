@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { userSignInStartAsync } from '../actions/userActions'
+import { userSignIn } from '../actions/userActions'
 
 const SignInScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
@@ -27,7 +27,7 @@ const SignInScreen = ({ location, history }) => {
   const submitHandler = e => {
     e.preventDefault()
 
-    dispatch(userSignInStartAsync(email, password))
+    dispatch(userSignIn(email, password))
   }
 
   return (

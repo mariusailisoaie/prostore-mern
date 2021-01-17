@@ -4,8 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getUserDetailsStartAsync, updateUserProfileStartAsync } from '../actions/userActions'
-import { getUserOrdersStartAsync } from '../actions/orderActions'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { getUserOrders } from '../actions/orderActions'
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -33,12 +33,12 @@ const ProfileScreen = ({ history }) => {
       history.push('/signin')
     } else {
       if (!userDetails.name) {
-        dispatch(getUserDetailsStartAsync('profile'))
-        dispatch(getUserOrdersStartAsync())
+        dispatch(getUserDetails('profile'))
+        dispatch(getUserOrders())
       } else {
         setName(userDetails.name)
         setEmail(userDetails.email)
-        dispatch(getUserOrdersStartAsync())
+        dispatch(getUserOrders())
       }
     }
   }, [dispatch, history, userInfo, userDetails])
@@ -49,7 +49,7 @@ const ProfileScreen = ({ history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match!')
     } else {
-      dispatch(updateUserProfileStartAsync({
+      dispatch(updateUserProfile({
         id: userDetails._id,
         name,
         email,

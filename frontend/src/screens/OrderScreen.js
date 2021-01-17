@@ -5,7 +5,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Link } from 'react-router-dom'
-import { getOrderDetailsStartAsync, payOrderStartAsync } from '../actions/orderActions'
+import { getOrderDetails, payOrder } from '../actions/orderActions'
 import { OrderActionTypes } from '../actions/actionTypes/orderActionTypes'
 import axios from 'axios'
 
@@ -48,7 +48,7 @@ const OrderScreen = ({ history, match }) => {
     // if (!order || order._id !== orderId) {
     if (!order || order._id !== orderId || paymentSuccessful) {
       dispatch({ type: OrderActionTypes.PAY_ORDER_RESET })
-      dispatch(getOrderDetailsStartAsync(orderId))
+      dispatch(getOrderDetails(orderId))
     } else if (!order.isPaid) {
       if (!window.paypal) {
         addPayPalScript()
@@ -61,7 +61,7 @@ const OrderScreen = ({ history, match }) => {
   const successPaymentHandler = paymentResult => {
     console.log(paymentResult)
 
-    dispatch(payOrderStartAsync(orderId, paymentResult))
+    dispatch(payOrder(orderId, paymentResult))
   }
 
   return isFetching ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : <Row>

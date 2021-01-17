@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { getUserDetailsStartAsync, updateUser } from '../actions/userActions'
+import { getUserDetails, updateUser } from '../actions/userActions'
 import { UserActionTypes } from '../actions/actionTypes/userActionTypes'
 
 const EditUserScreen = ({ match, history }) => {
@@ -29,7 +29,7 @@ const EditUserScreen = ({ match, history }) => {
       history.push('/admin/users')
     } else {
       if (!userDetails.name || userDetails._id !== userId) {
-        dispatch(getUserDetailsStartAsync(userId))
+        dispatch(getUserDetails(userId))
       } else {
         setName(userDetails.name)
         setEmail(userDetails.email)

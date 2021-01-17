@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { Link } from 'react-router-dom'
-import { createOrderStartAsync } from '../actions/orderActions'
+import { createOrder } from '../actions/orderActions'
 import { emptyCart } from '../actions/cartActions'
 
 const PlaceOrderScreen = ({ history }) => {
@@ -30,7 +30,7 @@ const PlaceOrderScreen = ({ history }) => {
   }, [history, success])
 
   const placeOrderHandler = () => {
-    dispatch(createOrderStartAsync({
+    dispatch(createOrder({
       orderItems: cart.cartItems,
       shippingAddress: cart.shippingAddress,
       paymentMethod: cart.paymentMethod,

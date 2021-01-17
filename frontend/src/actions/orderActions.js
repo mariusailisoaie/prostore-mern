@@ -16,7 +16,7 @@ export const createOrderFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const createOrderStartAsync = order => {
+export const createOrder = order => {
   return async (dispatch, getState) => {
     try {
       dispatch(createOrderStart())
@@ -52,7 +52,7 @@ export const getOrderDetailsFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const getOrderDetailsStartAsync = orderId => {
+export const getOrderDetails = orderId => {
   return async (dispatch, getState) => {
     try {
       dispatch(getOrderDetailsStart())
@@ -88,7 +88,7 @@ export const payOrderFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const payOrderStartAsync = (orderId, paymentResult) => {
+export const payOrder = (orderId, paymentResult) => {
   return async (dispatch, getState) => {
     try {
       dispatch(payOrderStart())
@@ -124,7 +124,7 @@ export const getUserOrdersFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const getUserOrdersStartAsync = () => {
+export const getUserOrders = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(getUserOrdersStart())

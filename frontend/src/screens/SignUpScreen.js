@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { userSignUpStartAsync } from '../actions/userActions'
+import { userSignUp } from '../actions/userActions'
 
 const SignUpScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -33,7 +33,7 @@ const SignUpScreen = ({ location, history }) => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match!')
     } else {
-      dispatch(userSignUpStartAsync(name, email, password))
+      dispatch(userSignUp(name, email, password))
     }
   }
 

@@ -15,7 +15,7 @@ export const fetchProductsFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const fetchProductsStartAsync = () => {
+export const fetchProducts = () => {
   return async dispatch => {
     try {
       dispatch(fetchProductsStart())

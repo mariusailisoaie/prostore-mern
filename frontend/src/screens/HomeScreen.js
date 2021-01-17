@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 import Product from '../components/Product'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { fetchProductsStartAsync } from '../actions/productActions'
+import { fetchProducts } from '../actions/productActions'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ const HomeScreen = () => {
   const { products, isFetching, errorMessage } = productList
 
   useEffect(() => {
-    dispatch(fetchProductsStartAsync())
+    dispatch(fetchProducts())
   }, [dispatch])
 
   return (
