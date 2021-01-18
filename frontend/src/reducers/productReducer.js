@@ -6,6 +6,38 @@ const INITIAL_STATE = {
   errorMessage: '',
 }
 
+const createProductReducer = (state = {
+  product: {},
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case ProductActionTypes.CREATE_PRODUCT_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case ProductActionTypes.CREATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        product: action.payload,
+        success: true,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case ProductActionTypes.CREATE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        errorMessage: action.payload,
+        isFetching: false,
+      }
+    case ProductActionTypes.CREATE_PRODUCT_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
 const fetchProductsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ProductActionTypes.FETCH_PRODUCTS_START:
@@ -58,4 +90,4 @@ const deleteProductReducer = (state = {
   }
 }
 
-export { fetchProductsReducer, deleteProductReducer }
+export { createProductReducer, fetchProductsReducer, deleteProductReducer }

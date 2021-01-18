@@ -1,6 +1,42 @@
 import { ProductActionTypes } from './actionTypes/productActionTypes'
 import axios from 'axios'
 
+// Actions for creating a product
+export const createProductStart = () => ({
+  type: ProductActionTypes.CREATE_PRODUCT_START,
+})
+
+export const createProductSuccess = product => ({
+  type: ProductActionTypes.CREATE_PRODUCT_SUCCESS,
+  payload: product,
+})
+
+export const createProductFailure = errorMessage => ({
+  type: ProductActionTypes.CREATE_PRODUCT_FAILURE,
+  payload: errorMessage,
+})
+
+export const createProduct = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(createProductStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.post('/api/products', {}, config)
+
+      dispatch(createProductSuccess(data))
+    } catch (error) {
+      dispatch(createProductFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
+// Actions for fetching all products
 export const fetchProductsStart = () => ({
   type: ProductActionTypes.FETCH_PRODUCTS_START
 })
