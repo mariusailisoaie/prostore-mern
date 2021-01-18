@@ -28,3 +28,38 @@ export const fetchProducts = () => {
     }
   }
 }
+
+// Actions for deleting products
+export const deleteProductStart = () => ({
+  type: ProductActionTypes.DELETE_PRODUCT_START,
+})
+
+export const deleteProductSuccess = successMessage => ({
+  type: ProductActionTypes.DELETE_PRODUCT_SUCCESS,
+  payload: successMessage,
+})
+
+export const deleteProductFailure = errorMessage => ({
+  type: ProductActionTypes.DELETE_PRODUCT_FAILURE,
+  payload: errorMessage,
+})
+
+export const deleteProduct = productId => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(deleteProductStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.delete(`/api/products/${ productId }`, config)
+
+      dispatch(deleteProductSuccess(data))
+    } catch (error) {
+      dispatch(deleteProductFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}

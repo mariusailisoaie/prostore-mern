@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
 
-import productsReducer from './productsReducer'
+import { fetchProductsReducer, deleteProductReducer } from './productReducer'
 import productDetailsReducer from './productDetailsReducer'
 import cartReducer from './cartReducer'
 import { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer, deleteUserReducer, updateUserReducer } from './userReducer'
 import { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer } from './orderReducer'
 
 const rootReducer = combineReducers({
-  productList: productsReducer,
+  productList: fetchProductsReducer,
+  productDeleted: deleteProductReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
   currentUser: userReducer,
