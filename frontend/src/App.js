@@ -17,6 +17,7 @@ import PageNotFoundScreen from './screens/PageNotFoundScreen'
 import UsersScreen from './screens/UsersScreen'
 import EditUserScreen from './screens/EditUserScreen'
 import ProductsScreen from './screens/ProductsScreen'
+import CreateProductScreen from './screens/CreateProductScreen'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
               <Route path='/admin/users' component={UsersScreen} />
               <Route path='/admin/products' component={ProductsScreen} />
               <Route path='/admin/user/:id' component={EditUserScreen} />
+              <Route path='/admin/product/create' component={CreateProductScreen} />
               <Route path='/signin' component={SignInScreen} />
               <Route path='/signup' component={SignUpScreen} />
               <Route path='/profile' component={ProfileScreen} />

@@ -4,8 +4,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { createProduct, fetchProducts, deleteProduct } from '../actions/productActions'
-import { ProductActionTypes } from '../actions/actionTypes/productActionTypes'
+import { fetchProducts, deleteProduct } from '../actions/productActions'
 
 const ProductsScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -16,25 +15,16 @@ const ProductsScreen = ({ history }) => {
   const productDeleted = useSelector(state => state.productDeleted)
   const { successMessage: deleteProductSuccess, isFetching: deleteProductLoading, errorMessage: deleteProductErrorMessage } = productDeleted
 
-  const createdProduct = useSelector(state => state.createdProduct)
-  const { product: newProduct, success: productCreatedSuccessfully, isFetching: createProductLoading, errorMessage: createProductErrorMessage } = createdProduct
-
   const currentUser = useSelector(state => state.currentUser)
   const { userInfo } = currentUser
 
   useEffect(() => {
-    dispatch({ type: ProductActionTypes.CREATE_PRODUCT_RESET })
-
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/signin')
-    }
-
-    if (productCreatedSuccessfully) {
-      history.push(`/admin/product/${ newProduct._id }/edit`)
     } else {
       dispatch(fetchProducts())
     }
-  }, [dispatch, history, userInfo, deleteProductSuccess, productCreatedSuccessfully, newProduct])
+  }, [dispatch, history, userInfo, deleteProductSuccess])
 
   const deleteProductHandler = productId => {
     if (window.confirm('Are you sure you want to delete the product?')) {
@@ -43,7 +33,7 @@ const ProductsScreen = ({ history }) => {
   }
 
   const createProductHandler = () => {
-    dispatch(createProduct())
+    history.push('/admin/product/create')
   }
 
   return (
@@ -62,12 +52,8 @@ const ProductsScreen = ({ history }) => {
       </Row>
 
       {deleteProductErrorMessage && <Message variant='danger'>{deleteProductErrorMessage}</Message>}
-      {deleteProductLoading && <Message variant='danger'>{deleteProductLoading}</Message>}
 
-      {createProductLoading && <Loader />}
-      {createProductErrorMessage && <Message variant='danger'>{createProductErrorMessage}</Message>}
-
-      {isFetching ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
+      {isFetching || deleteProductLoading ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>

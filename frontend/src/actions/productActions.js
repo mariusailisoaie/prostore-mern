@@ -16,7 +16,7 @@ export const createProductFailure = errorMessage => ({
   payload: errorMessage,
 })
 
-export const createProduct = () => {
+export const createProduct = product => {
   return async (dispatch, getState) => {
     try {
       dispatch(createProductStart())
@@ -27,7 +27,7 @@ export const createProduct = () => {
         }
       }
 
-      const { data } = await axios.post('/api/products', {}, config)
+      const { data } = await axios.post('/api/products', product, config)
 
       dispatch(createProductSuccess(data))
     } catch (error) {
