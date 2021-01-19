@@ -25,3 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 frontend/.eslintcache
 frontend/build
+uploads/*.jpg
+uploads/*.jpeg
+uploads/*.png
+uploads/*.svg
