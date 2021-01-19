@@ -5,17 +5,17 @@ import Product from '../models/productModel.js'
 // @route   POST /api/products
 // @access  Protected/Admins
 const createProduct = asyncHandler(async (req, res) => {
+  const { name, image, brand, category, description, price, countInStock } = req.body
+
   const product = new Product({
     user: req.user._id,
-    name: 'Sample name',
-    image: '/images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
-    description: 'Sample product',
-    rating: 0,
-    numReviews: 0,
-    price: 0,
-    countInStock: 0,
+    name,
+    image,
+    brand,
+    category,
+    description,
+    price,
+    countInStock,
   })
 
   const createdProduct = await product.save()
