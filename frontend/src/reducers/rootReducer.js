@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import { createProductReducer, fetchProductsReducer, deleteProductReducer } from './productReducer'
+import { createProductReducer, fetchProductsReducer, updateProductReducer, deleteProductReducer } from './productReducer'
 import productDetailsReducer from './productDetailsReducer'
 import cartReducer from './cartReducer'
 import { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer, deleteUserReducer, updateUserReducer } from './userReducer'
@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
   productDeleted: deleteProductReducer,
   productDetails: productDetailsReducer,
   createdProduct: createProductReducer,
+  productUpdated: updateProductReducer,
   cart: cartReducer,
   currentUser: userReducer,
   userProfileDetails: userDetailsReducer,

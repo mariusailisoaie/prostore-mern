@@ -65,6 +65,42 @@ export const fetchProducts = () => {
   }
 }
 
+// Actions for updating products
+export const updateProductStart = () => ({
+  type: ProductActionTypes.UPDATE_PRODUCT_START,
+})
+
+export const updateProductSuccess = updatedProduct => ({
+  type: ProductActionTypes.UPDATE_PRODUCT_SUCCESS,
+  payload: updatedProduct,
+})
+
+export const updateProductFailure = errorMessage => ({
+  type: ProductActionTypes.UPDATE_PRODUCT_FAILURE,
+  payload: errorMessage,
+})
+
+export const updateProduct = (productId, product) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(updateProductStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.put(`/api/products/${ productId }`, product, config)
+
+      dispatch(updateProductSuccess(data))
+    } catch (error) {
+      dispatch(updateProductFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
+
 // Actions for deleting products
 export const deleteProductStart = () => ({
   type: ProductActionTypes.DELETE_PRODUCT_START,

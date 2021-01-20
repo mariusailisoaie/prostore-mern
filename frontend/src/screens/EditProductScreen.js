@@ -6,6 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { fetchProductDetails } from '../actions/productDetailsActions'
+import { updateProduct } from '../actions/productActions'
+import { ProductActionTypes } from '../actions/actionTypes/productActionTypes'
 
 const EditProductScreen = ({ match, history }) => {
   const productId = match.params.id
@@ -20,26 +22,42 @@ const EditProductScreen = ({ match, history }) => {
 
   const dispatch = useDispatch()
 
+  const currentUser = useSelector(state => state.currentUser)
+  const { userInfo } = currentUser
+
   const productDetails = useSelector(state => state.productDetails)
   const { product, isFetching, errorMessage } = productDetails
 
+  const productUpdated = useSelector(state => state.productUpdated)
+  const { updatedProduct, success: updateProductSuccess, isFetching: updateProductLoading, errorMessage: updateProductErrorMessage } = productUpdated
+
   useEffect(() => {
-    if (!product.name || product._id !== productId) {
+    if (!userInfo || !userInfo.isAdmin) {
+      history.push('/signin')
+    }
+
+    if (updateProductSuccess) {
+      history.push('/admin/products')
+      dispatch({ type: ProductActionTypes.UPDATE_PRODUCT_RESET })
       dispatch(fetchProductDetails(productId))
     } else {
-      setName(product.name)
-      setImage(product.image)
-      setBrand(product.brand)
-      setCategory(product.category)
-      setDescription(product.description)
-      setPrice(product.price)
-      setCountInStock(product.countInStock)
+      if (!product.name || product._id !== productId) {
+        dispatch(fetchProductDetails(productId))
+      } else {
+        setName(product.name)
+        setImage(product.image)
+        setBrand(product.brand)
+        setCategory(product.category)
+        setDescription(product.description)
+        setPrice(product.price)
+        setCountInStock(product.countInStock)
+      }
     }
-  }, [dispatch, product, productId])
+  }, [dispatch, history, product, productId, userInfo, updatedProduct, updateProductSuccess])
 
   const submitHandler = e => {
     e.preventDefault()
-    // Update product
+    dispatch(updateProduct(productId, { name, image, brand, category, description, price, countInStock }))
   }
 
   return (
@@ -49,8 +67,10 @@ const EditProductScreen = ({ match, history }) => {
       <FormContainer>
         <h1>Edit product</h1>
 
+        {updateProductErrorMessage && <Message variant='danger'>{updateProductErrorMessage}</Message>}
+
         {
-          isFetching ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
+          isFetching || updateProductLoading ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
             <Form onSubmit={submitHandler}>
               <Form.Group controlId='productname'>
                 <Form.Label>Name</Form.Label>

@@ -62,6 +62,39 @@ const fetchProductsReducer = (state = INITIAL_STATE, action) => {
   }
 }
 
+const updateProductReducer = (state = {
+  updatedProduct: {},
+  success: false,
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case ProductActionTypes.UPDATE_PRODUCT_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case ProductActionTypes.UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        updatedProduct: action.payload,
+        success: action.payload,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case ProductActionTypes.UPDATE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    case ProductActionTypes.UPDATE_PRODUCT_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
 const deleteProductReducer = (state = {
   successMessage: '',
   isFetching: false,
@@ -90,4 +123,4 @@ const deleteProductReducer = (state = {
   }
 }
 
-export { createProductReducer, fetchProductsReducer, deleteProductReducer }
+export { createProductReducer, fetchProductsReducer, updateProductReducer, deleteProductReducer }
