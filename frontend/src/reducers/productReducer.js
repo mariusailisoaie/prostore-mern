@@ -112,7 +112,7 @@ const deleteProductReducer = (state = {
         isFetching: false,
         successMessage: action.payload,
       }
-    case ProductActionTypes.FETCH_PRODUCTS_FAILURE:
+    case ProductActionTypes.DELETE_PRODUCT_FAILURE:
       return {
         ...state,
         isFetching: false,
