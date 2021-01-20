@@ -69,7 +69,7 @@ const CreateProductScreen = ({ history }) => {
       const { data } = await axios.post('/api/upload', formData, config)
 
       setImageName(data.files.productImage.name)
-      setImage(data.files.productImage.path.substring(29))
+      setImage(data.files.productImage.path.split('prostore')[1])
       setUploading(false)
     } catch (error) {
       setUploading(false)
