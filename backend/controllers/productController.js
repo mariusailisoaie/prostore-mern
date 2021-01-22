@@ -63,6 +63,19 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Delete all products
+// @route   DELETE /api/products
+// @access  Protected/Admins
+const deleteAllProducts = asyncHandler(async (req, res) => {
+  try {
+    await Product.deleteMany()
+    res.json({ message: 'All products removed successfully' })
+  } catch (error) {
+    res.status(500)
+    throw new Error('Something went wrong. NO product was deleted')
+  }
+})
+
 // @desc    Update a product
 // @route   PUT /api/products
 // @access  Protected/Admins
@@ -88,4 +101,4 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 })
 
-export { createProduct, getProducts, getProductById, updateProduct, deleteProduct }
+export { createProduct, getProducts, getProductById, updateProduct, deleteProduct, deleteAllProducts }
