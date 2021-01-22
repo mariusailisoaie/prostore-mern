@@ -1,5 +1,6 @@
 import { UserActionTypes } from './actionTypes/userActionTypes'
 import axios from 'axios'
+import { CartActionTypes } from './actionTypes/cartActionTypes'
 
 // Actions for sign in
 export const userSignInStart = () => ({
@@ -256,6 +257,8 @@ export const updateUser = user => {
 // Action for sign out
 export const signout = () => dispatch => {
   localStorage.removeItem('userInfo')
+  localStorage.removeItem('cartItems')
   dispatch({ type: UserActionTypes.USER_LOGOUT })
   dispatch({ type: UserActionTypes.RESET_USER_DETAILS })
+  dispatch({ type: CartActionTypes.EMPTY_CART })
 }

@@ -1,10 +1,11 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { signout } from '../actions/userActions'
 
-const Header = () => {
+const Header = ({ history }) => {
   const dispatch = useDispatch()
 
   const currentUser = useSelector(state => state.currentUser)
@@ -12,6 +13,7 @@ const Header = () => {
 
   const signoutHandler = () => {
     dispatch(signout())
+    history.push('/')
   }
   return (
     <header>
@@ -59,4 +61,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default withRouter(Header)
