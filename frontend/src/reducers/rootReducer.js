@@ -1,10 +1,28 @@
 import { combineReducers } from 'redux'
 
-import { createProductReducer, fetchProductsReducer, updateProductReducer, deleteProductReducer } from './productReducer'
+import {
+  createProductReducer,
+  fetchProductsReducer,
+  updateProductReducer,
+  deleteProductReducer,
+  deleteAllProductsReducer
+} from './productReducer'
 import productDetailsReducer from './productDetailsReducer'
 import cartReducer from './cartReducer'
-import { userReducer, userDetailsReducer, updateUserProfileReducer, getUsersReducer, deleteUserReducer, updateUserReducer } from './userReducer'
-import { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer } from './orderReducer'
+import {
+  userReducer,
+  userDetailsReducer,
+  updateUserProfileReducer,
+  getUsersReducer,
+  deleteUserReducer,
+  updateUserReducer
+} from './userReducer'
+import {
+  createOrderReducer,
+  getOrderDetailsReducer,
+  getUserOrdersReducer,
+  payOrderReducer
+} from './orderReducer'
 
 const rootReducer = combineReducers({
   productList: fetchProductsReducer,
@@ -12,6 +30,7 @@ const rootReducer = combineReducers({
   productDetails: productDetailsReducer,
   createdProduct: createProductReducer,
   productUpdated: updateProductReducer,
+  allProductsDeleted: deleteAllProductsReducer,
   cart: cartReducer,
   currentUser: userReducer,
   userProfileDetails: userDetailsReducer,

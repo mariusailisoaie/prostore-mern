@@ -135,3 +135,38 @@ export const deleteProduct = productId => {
     }
   }
 }
+
+// Actions for deleting all products at once
+export const deleteAllProductsStart = () => ({
+  type: ProductActionTypes.DELETE_ALL_PRODUCTS_START,
+})
+
+export const deleteAllProductsSuccess = successMessage => ({
+  type: ProductActionTypes.DELETE_ALL_PRODUCTS_SUCCESS,
+  payload: successMessage,
+})
+
+export const deleteAllProductsFailure = errorMessage => ({
+  type: ProductActionTypes.DELETE_ALL_PRODUCTS_FAILURE,
+  payload: errorMessage,
+})
+
+export const deleteAllProducts = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(deleteAllProductsStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.delete(`/api/products`, config)
+
+      dispatch(deleteAllProductsSuccess(data))
+    } catch (error) {
+      dispatch(deleteAllProductsFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}

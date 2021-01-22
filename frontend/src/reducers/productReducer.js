@@ -123,4 +123,32 @@ const deleteProductReducer = (state = {
   }
 }
 
-export { createProductReducer, fetchProductsReducer, updateProductReducer, deleteProductReducer }
+const deleteAllProductsReducer = (state = {
+  successMessage: '',
+  isFetching: false,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case ProductActionTypes.DELETE_ALL_PRODUCTS_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case ProductActionTypes.DELETE_ALL_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        successMessage: action.payload,
+      }
+    case ProductActionTypes.DELETE_ALL_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export { createProductReducer, fetchProductsReducer, updateProductReducer, deleteProductReducer, deleteAllProductsReducer }

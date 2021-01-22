@@ -4,7 +4,7 @@ import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { fetchProducts, deleteProduct } from '../actions/productActions'
+import { fetchProducts, deleteProduct, deleteAllProducts } from '../actions/productActions'
 
 const ProductsScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -15,6 +15,9 @@ const ProductsScreen = ({ history }) => {
   const productDeleted = useSelector(state => state.productDeleted)
   const { successMessage: deleteProductSuccess, isFetching: deleteProductLoading, errorMessage: deleteProductErrorMessage } = productDeleted
 
+  const allProductsDeleted = useSelector(state => state.allProductsDeleted)
+  const { successMessage: deleteAllProductsSuccess, isFetching: deleteAllProductsLoading, errorMessage: deleteAllProductsErrorMessage } = allProductsDeleted
+
   const currentUser = useSelector(state => state.currentUser)
   const { userInfo } = currentUser
 
@@ -24,11 +27,17 @@ const ProductsScreen = ({ history }) => {
     } else {
       dispatch(fetchProducts())
     }
-  }, [dispatch, history, userInfo, deleteProductSuccess])
+  }, [dispatch, history, userInfo, deleteProductSuccess, deleteAllProductsSuccess])
 
   const deleteProductHandler = productId => {
     if (window.confirm('Are you sure you want to delete the product?')) {
       dispatch(deleteProduct(productId))
+    }
+  }
+
+  const deleteAllProductsHandler = () => {
+    if (window.confirm('Are you sure you want to delete ALL products?')) {
+      dispatch(deleteAllProducts())
     }
   }
 
@@ -52,8 +61,9 @@ const ProductsScreen = ({ history }) => {
       </Row>
 
       {deleteProductErrorMessage && <Message variant='danger'>{deleteProductErrorMessage}</Message>}
+      {deleteAllProductsErrorMessage && <Message variant='danger'>{deleteAllProductsErrorMessage}</Message>}
 
-      {isFetching || deleteProductLoading ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
+      {isFetching || deleteProductLoading || deleteAllProductsLoading ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -92,6 +102,19 @@ const ProductsScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
+
+      {
+        products.length > 0 && !deleteAllProductsLoading && !isFetching &&
+        <Col className='text-right'>
+          <Button
+            className='my-3'
+            variant='danger'
+            onClick={deleteAllProductsHandler}
+          >
+            <i className='fas fa-trash'></i> Delete all products
+          </Button>
+        </Col>
+      }
     </div>
   )
 }
