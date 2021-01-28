@@ -50,6 +50,15 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc    Get all orders. Admins only
+// @route   GET /api/orders
+// @access  Protected/Admins
+const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name')
+
+  res.json(orders)
+})
+
 // @desc    Update order to paid
 // @route   PUT /api/orders
 // @access  Protected
@@ -91,4 +100,4 @@ const getUserOrders = asyncHandler(async (req, res) => {
   }
 })
 
-export { createOrder, getOrderById, updateOrderToPaid, getUserOrders }
+export { createOrder, getOrderById, updateOrderToPaid, getUserOrders, getOrders }
