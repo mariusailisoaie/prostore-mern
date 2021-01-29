@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { getOrderDetails, payOrder } from '../actions/orderActions'
 import { OrderActionTypes } from '../actions/actionTypes/orderActionTypes'
 import axios from 'axios'
+import swap from 'pure-swap'
 
 const OrderScreen = ({ history, match }) => {
   const orderId = match.params.id
@@ -87,7 +88,7 @@ const OrderScreen = ({ history, match }) => {
         <ListGroup.Item>
           <h2>Payment Method</h2>
           <p>{order.paymentMethod}</p>
-          {order.isPaid ? <Message variant='success'>Paid on {Date(order.paidAt.split('T'))}</Message> : <Message variant='danger'>Not paid</Message>}
+          {order.isPaid ? <Message variant='success'>Paid on {swap(new Date(order.paidAt).toString().split('GMT')[0].substr(4).split(' '), 0, 1).join(' ')}</Message> : <Message variant='danger'>Not paid</Message>}
         </ListGroup.Item>
 
         <ListGroup.Item>
