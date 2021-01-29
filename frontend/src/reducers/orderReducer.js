@@ -122,4 +122,33 @@ const payOrderReducer = (state = {
   }
 }
 
-export { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer }
+const getAllOrdersReducer = (state = {
+  orders: {},
+  isFetching: true,
+  errorMessage: '',
+}, action) => {
+  switch (action.type) {
+    case OrderActionTypes.GET_ALL_ORDERS_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case OrderActionTypes.GET_ALL_ORDERS_SUCCESS:
+      return {
+        ...state,
+        orders: action.payload,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case OrderActionTypes.GET_ALL_ORDERS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer, getAllOrdersReducer }

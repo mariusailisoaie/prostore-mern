@@ -21,7 +21,8 @@ import {
   createOrderReducer,
   getOrderDetailsReducer,
   getUserOrdersReducer,
-  payOrderReducer
+  payOrderReducer,
+  getAllOrdersReducer,
 } from './orderReducer'
 
 const rootReducer = combineReducers({
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   orderDetails: getOrderDetailsReducer,
   orderPayStatus: payOrderReducer,
   userOrders: getUserOrdersReducer,
+  allOrders: getAllOrdersReducer,
 })
 
 export default rootReducer

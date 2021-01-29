@@ -145,6 +145,37 @@ export const getUserOrders = () => {
   }
 }
 
+// Actions for getting all orders. Only for admins
+export const getAllOrdersStart = () => ({
+  type: OrderActionTypes.GET_ALL_ORDERS_START,
+})
 
+export const getAllOrdersSuccess = orders => ({
+  type: OrderActionTypes.GET_ALL_ORDERS_SUCCESS,
+  payload: orders,
+})
 
+export const getAllOrdersFailure = errorMessage => ({
+  type: OrderActionTypes.GET_ALL_ORDERS_FAILURE,
+  payload: errorMessage,
+})
 
+export const getAllOrders = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(getAllOrdersStart())
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.get('/api/orders', config)
+
+      dispatch(getAllOrdersSuccess(data))
+    } catch (error) {
+      dispatch(getAllOrdersFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
