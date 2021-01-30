@@ -56,9 +56,9 @@ const OrdersScreen = ({ history }) => {
                   <td>{order.totalPrice} dkk</td>
                   <td>{order.taxPrice} dkk</td>
                   <td>{order.shippingPrice} dkk</td>
-                  <td>{order.isPaid.toString()}</td>
+                  <td>{order.isPaid ? <i className='fas fa-check' style={{ color: 'green' }}></i> : <i className='fas fa-times' style={{ color: 'red' }}></i>}</td>
                   <td>{swap(new Date(order.paidAt).toString().split('GMT')[0].substr(4).split(' '), 0, 1).join(' ')}</td>
-                  <td>{order.isDelivered.toString()}</td>
+                  <td>{order.isDelivered ? <i className='fas fa-check' style={{ color: 'green' }} /> : <i className='fas fa-times' style={{ color: 'red' }} />}</td>
                   <td>{order.user.name}</td>
                   <td>{order.orderItems.length}</td>
                   <td>{order.shippingAddress.address}, {order.shippingAddress.postalCode} {order.shippingAddress.city}</td>
