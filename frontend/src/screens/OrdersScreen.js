@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Table } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -45,6 +46,7 @@ const OrdersScreen = ({ history }) => {
               <th>PAYMENT METHOD</th>
               <th>CREATED AT</th>
               <th>UPDATED AT</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -65,6 +67,11 @@ const OrdersScreen = ({ history }) => {
                   <td>{order.paymentMethod}</td>
                   <td>{swap(new Date(order.createdAt).toString().split('GMT')[0].substr(4).split(' '), 0, 1).join(' ')}</td>
                   <td>{swap(new Date(order.updatedAt).toString().split('GMT')[0].substr(4).split(' '), 0, 1).join(' ')}</td>
+                  <td>
+                    <LinkContainer to={`/order/${ order._id }`}>
+                      <Button className='btn-sm' variant='light'>Details</Button>
+                    </LinkContainer>
+                  </td>
                 </tr>
               ))
             }
