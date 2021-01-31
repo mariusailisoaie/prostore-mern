@@ -122,6 +122,33 @@ const payOrderReducer = (state = {
   }
 }
 
+const updateOrderToDeliveredReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_START:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_SUCCESS:
+      return {
+        ...state,
+        success: true,
+        isFetching: false,
+        errorMessage: '',
+      }
+    case OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errorMessage: action.payload,
+      }
+    case OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
 const getAllOrdersReducer = (state = {
   orders: {},
   isFetching: true,
@@ -151,4 +178,4 @@ const getAllOrdersReducer = (state = {
   }
 }
 
-export { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer, getAllOrdersReducer }
+export { createOrderReducer, getOrderDetailsReducer, getUserOrdersReducer, payOrderReducer, updateOrderToDeliveredReducer, getAllOrdersReducer }

@@ -109,6 +109,42 @@ export const payOrder = (orderId, paymentResult) => {
   }
 }
 
+// Actions for updating orders to DELIVERED
+export const updateOrderToDeliveredStart = () => ({
+  type: OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_START,
+})
+
+export const updateOrderToDeliveredSuccess = order => ({
+  type: OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_SUCCESS,
+  payload: order,
+})
+
+export const updateOrderToDeliveredFailure = errorMessage => ({
+  type: OrderActionTypes.UPDATE_ORDER_TO_DELIVERED_FAILURE,
+  payload: errorMessage,
+})
+
+export const updateOrderToDelivered = orderId => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(updateOrderToDeliveredStart())
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${ getState().currentUser.userInfo.token }`
+        }
+      }
+
+      const { data } = await axios.put(`/api/orders/${ orderId }/deliver`, {}, config)
+
+      dispatch(updateOrderToDeliveredSuccess(data))
+    } catch (error) {
+      dispatch(updateOrderToDeliveredFailure(error.response && error.response.data.message ? error.response.data.message : error.message))
+    }
+  }
+}
+
 // Actions for getting user orders
 export const getUserOrdersStart = () => ({
   type: OrderActionTypes.GET_USER_ORDERS_START,

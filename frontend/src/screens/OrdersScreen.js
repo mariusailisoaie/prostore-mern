@@ -4,7 +4,7 @@ import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { getAllOrders } from '../actions/orderActions'
+import { getAllOrders, updateOrderToDelivered } from '../actions/orderActions'
 import swap from 'pure-swap'
 
 const OrdersScreen = ({ history }) => {
@@ -16,19 +16,30 @@ const OrdersScreen = ({ history }) => {
   const allOrders = useSelector(state => state.allOrders)
   const { orders, isFetching, errorMessage } = allOrders
 
+  const orderDelivered = useSelector(state => state.orderDelivered)
+  const { /* order: updatedOrder, */ success: orderUpdatedSuccessfully, isFetching: updateOrderToDeliveredLoading, errorMessage: updateOrderToDeliveredErrorMessage } = orderDelivered
+
   useEffect(() => {
     if (!userInfo || !userInfo.isAdmin) {
       history.push('/signin')
     } else {
       dispatch(getAllOrders())
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, userInfo, orderUpdatedSuccessfully])
+
+  const updateOrderToDeliveredHandler = orderId => {
+    if (window.confirm('Are you sure you want to update the product?')) {
+      dispatch(updateOrderToDelivered(orderId))
+    }
+  }
 
   return (
     <div>
       <h2>Orders</h2>
 
-      {isFetching ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
+      {updateOrderToDeliveredErrorMessage && <Message variant='danger'>{errorMessage}</Message>}
+
+      {isFetching || updateOrderToDeliveredLoading ? <Loader /> : errorMessage ? <Message variant='danger'>{errorMessage}</Message> : (
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr>
@@ -40,6 +51,7 @@ const OrdersScreen = ({ history }) => {
               <th>PAID</th>
               <th>PAID AT</th>
               <th>DELIVERED</th>
+              <th>UPDATE DELIVERED</th>
               <th>USER</th>
               <th>ITEMS</th>
               <th>ADDRESS</th>
@@ -63,6 +75,14 @@ const OrdersScreen = ({ history }) => {
                     order.paidAt ? swap(new Date(order.paidAt).toString().split('GMT')[0].substr(4).split(' '), 0, 1).join(' ') : 'Not paid'
                   }</td>
                   <td>{order.isDelivered ? <i className='fas fa-check' style={{ color: 'green' }} /> : <i className='fas fa-times' style={{ color: 'red' }} />}</td>
+                  <th><Button
+                    className='btn-sm'
+                    variant='light'
+                    onClick={() => updateOrderToDeliveredHandler(order._id)}
+                    disabled={order.isDelivered}
+                  >
+                    Update
+                  </Button></th>
                   <td>{order.user.name}</td>
                   <td>{order.orderItems.length}</td>
                   <td>{order.shippingAddress.address}, {order.shippingAddress.postalCode} {order.shippingAddress.city}</td>
