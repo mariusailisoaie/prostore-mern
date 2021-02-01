@@ -1,12 +1,12 @@
 import express from 'express'
 import path from 'path'
 import formidable from 'formidable'
-const __dirname = path.resolve(path.dirname(decodeURI(new URL(import.meta.url).pathname)))
+const __dirname = path.resolve()
 
 const router = express.Router()
 
 router.post('/', (req, res, next) => {
-  const form = formidable({ multiples: true, uploadDir: path.join(__dirname, '../../uploads'), keepExtensions: true })
+  const form = formidable({ multiples: true, uploadDir: path.join(__dirname, '/uploads'), keepExtensions: true })
 
   form.parse(req, (err, fields, files) => {
     if (err) {
